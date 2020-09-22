@@ -1,8 +1,5 @@
 psutil
 wave
-pyaudio
-pyscreenshot
-opencv-python
 netifaces
 getmac
 argparse
